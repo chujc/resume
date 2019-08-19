@@ -6,21 +6,24 @@ import com.chujc.manage.resume.mbg.model.HgCertificationsExample;
 import com.chujc.manage.resume.service.CertificationService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class CertficationServiceImpl implements CertificationService {
+@Service
+public class CertificationServiceImpl implements CertificationService {
 
     @Autowired
     private HgCertificationsMapper certficationMapper;
 
-
+    @Override
     public int create(HgCertifications certifications) {
 
         return certficationMapper.insertSelective(certifications);
     }
 
 
+    @Override
     public List<HgCertifications> list(int pageNum, int pageSize, String name) {
 
         PageHelper.startPage(pageNum, pageSize);
@@ -32,5 +35,16 @@ public class CertficationServiceImpl implements CertificationService {
         }
 
         return certficationMapper.selectByExample(example);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return certficationMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int update(Integer id, HgCertifications certifications) {
+        certifications.setCertificationId(id);
+        return certficationMapper.updateByPrimaryKeySelective(certifications);
     }
 }

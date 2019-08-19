@@ -1,6 +1,9 @@
 package com.chujc.manage.resume.mbg.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,7 +17,7 @@ public class HgCertifications implements Serializable {
     private Integer parentId;
 
     @ApiModelProperty(value = "0,1 都是分类 2才是最终的证书")
-    private Boolean level;
+    private Integer level;
 
     private Date createdAt;
 
@@ -46,11 +49,11 @@ public class HgCertifications implements Serializable {
         this.parentId = parentId;
     }
 
-    public Boolean getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(Boolean level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
