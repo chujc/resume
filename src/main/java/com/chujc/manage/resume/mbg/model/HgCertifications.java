@@ -1,9 +1,8 @@
 package com.chujc.manage.resume.mbg.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +10,7 @@ public class HgCertifications implements Serializable {
     private Integer certificationId;
 
     @ApiModelProperty(value = "证书名称")
+    @NotBlank
     private String name;
 
     @ApiModelProperty(value = "父级id")

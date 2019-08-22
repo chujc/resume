@@ -24,7 +24,7 @@ public class CertificationServiceImpl implements CertificationService {
 
 
     @Override
-    public List<HgCertifications> list(int pageNum, int pageSize, String name) {
+    public List<HgCertifications> index(int pageNum, int pageSize, String name) {
 
         PageHelper.startPage(pageNum, pageSize);
 

@@ -8,9 +8,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -25,8 +30,8 @@ public class CertificationController {
     private CertificationService certificationService;
 
     @ApiOperation("添加证书")
-    @PostMapping(value = "create")
-    public CommonResult create (@RequestBody HgCertifications certifications) {
+    @PostMapping(value = "/")
+    public CommonResult create (@RequestBody @Valid HgCertifications certifications) {
         CommonResult commonResult;
         int count = certificationService.create(certifications);
         if (count == 1) {
@@ -39,8 +44,8 @@ public class CertificationController {
 
 
     @ApiOperation("证书列表")
-    @GetMapping(value = "list")
-    public CommonResult<CommonPage<HgCertifications>> getList(@RequestParam(value = "pageNum", defaultValue = "1")
+    @GetMapping(value = "/")
+    public CommonResult<CommonPage<HgCertifications>> index(@RequestParam(value = "pageNum", defaultValue = "1")
                                                         @ApiParam("页码") Integer pageNum,
                                                         @RequestParam(value = "pageSize", defaultValue = "20")
                                                         @ApiParam("每页数量") Integer pageSize,
@@ -48,13 +53,13 @@ public class CertificationController {
                                                         @ApiParam("证书名称") String name
                                                         ) {
 
-        List<HgCertifications> hgCertifications = certificationService.list(pageNum, pageSize, name);
+        List<HgCertifications> hgCertifications = certificationService.index(pageNum, pageSize, name);
 
         return CommonResult.success(CommonPage.restPage(hgCertifications));
     }
 
     @ApiOperation("删除证书")
-    @DeleteMapping(value = "delete")
+    @DeleteMapping(value = "/")
     public CommonResult delete(@RequestParam(value = "id") Integer id) {
 
         CommonResult commonResult;
@@ -67,6 +72,22 @@ public class CertificationController {
             commonResult = CommonResult.failed("删除成功");
         }
         return  commonResult;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public  CommonResult handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        CommonResult commonResult;
+
+
+        String errorMsg = ex.getBindingResult().getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining("\n", "[", "]"));
+
+        commonResult = CommonResult.failed(errorMsg);
+
+        return commonResult;
     }
 
 }
