@@ -74,20 +74,20 @@ public class CertificationController {
         return  commonResult;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public  CommonResult handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        CommonResult commonResult;
-
-
-        String errorMsg = ex.getBindingResult().getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining("\n", "[", "]"));
-
-        commonResult = CommonResult.failed(errorMsg);
-
-        return commonResult;
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public  CommonResult handleValidationExceptions(
+//            MethodArgumentNotValidException ex) {
+//        CommonResult commonResult;
+//
+//
+//        String errorMsg = ex.getBindingResult().getAllErrors().stream()
+//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                .collect(Collectors.joining("\n", "[", "]"));
+//
+//        commonResult = CommonResult.failed(errorMsg);
+//
+//        return commonResult;
+//    }
 
 }

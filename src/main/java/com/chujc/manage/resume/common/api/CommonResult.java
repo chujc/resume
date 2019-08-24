@@ -5,15 +5,16 @@ package com.chujc.manage.resume.common.api;
  * Created by macro on 2019/4/19.
  */
 public class CommonResult<T> {
-    private long code;
+    private long status;
     private String message;
     private T data;
+    private T error;
 
     protected CommonResult() {
     }
 
     protected CommonResult(long code, String message, T data) {
-        this.code = code;
+        this.status = code;
         this.message = message;
         this.data = data;
     }
@@ -75,6 +76,10 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
 
+    public static <T> CommonResult<T> validateFailed(String message, T error) {
+        return  new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, error);
+    }
+
     /**
      * 未登录返回结果
      */
@@ -89,12 +94,12 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public long getCode() {
-        return code;
+    public long getStatus() {
+        return status;
     }
 
-    public void setCode(long code) {
-        this.code = code;
+    public void setStatus(long code) {
+        this.status = code;
     }
 
     public String getMessage() {
@@ -111,5 +116,13 @@ public class CommonResult<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public T getError() {
+        return error;
+    }
+
+    public void setError(T error) {
+        this.error = error;
     }
 }

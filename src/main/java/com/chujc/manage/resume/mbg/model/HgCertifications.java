@@ -2,6 +2,8 @@ package com.chujc.manage.resume.mbg.model;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +19,7 @@ public class HgCertifications implements Serializable {
     private Integer parentId;
 
     @ApiModelProperty(value = "0,1 都是分类 2才是最终的证书")
+    @Max(2)@Min(0)
     private Integer level;
 
     private Date createdAt;
