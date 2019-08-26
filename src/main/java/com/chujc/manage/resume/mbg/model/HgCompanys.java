@@ -1,6 +1,9 @@
 package com.chujc.manage.resume.mbg.model;
 
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,9 +11,11 @@ public class HgCompanys implements Serializable {
     private Integer companyId;
 
     @ApiModelProperty(value = "公司名称")
+    @NotBlank
     private String name;
 
     @ApiModelProperty(value = "城市")
+    @Min(value = 0)
     private String city;
 
     @ApiModelProperty(value = "国家")
